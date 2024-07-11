@@ -1,0 +1,91 @@
+✴ Dynamic blocks in Terraform provide a powerful way to dynamically generate repeated nested configurations within resource, provider, or module blocks. This capability enhances flexibility and reduces redundancy in your Terraform code. Here’s a guide to understanding and leveraging dynamic blocks effectively.
+✴ What are Dynamic Blocks?
+Dynamic blocks allow you to dynamically define repeated nested configurations within Terraform resource, provider, or module blocks. They enable you to iterate over a list, map, or set of elements to generate configurations programmatically.
+✴ Basic Usage of Dynamic Blocks:
+Here’s a basic example of using a dynamic block to create multiple AWS security group rules:
+variable "rules" {
+ description = "List of security group rules"
+ type    = list(object({
+ type    = string
+ from_port  = number
+ to_port   = number
+ protocol  = string
+ cidr_blocks = list(string)
+ }))
+ default = [
+ {
+ type    = "ingress"
+ from_port  = 80
+ to_port   = 80
+ protocol  = "tcp"
+ cidr_blocks = ["0.0.0.0/0"]
+ },
+ {
+ type    = "egress"
+ from_port  = 0
+ to_port   = 0
+ protocol  = "-1"
+ cidr_blocks = ["0.0.0.0/0"]
+ }
+ ]
+}
+
+resource "aws_security_group" "example" {
+ name    = "example-security-group"
+ description = "Example security group with dynamic rules"
+
+ dynamic "ingress" {
+ for_each = var.rules
+ content {
+ from_port  = ingress.value.from_port
+ to_port   = ingress.value.to_port
+ protocol  = ingress.value.protocol
+ cidr_blocks = ingress.value.cidr_blocks
+
+ # Conditional block based on type
+ if ingress.value.type == "egress" {
+ self = true
+ }
+ }
+ }
+}
+✴ Key Concepts and Benefits:
+👉 Iterating Over Lists: Use for_each to iterate over a list of objects or elements defined in a variable.
+👉 Conditional Logic: Incorporate conditional statements within dynamic blocks to customize configurations based on specific conditions.
+👉 Reduced Code Duplication: Dynamic blocks help reduce redundancy by generating repetitive configurations based on dynamic input data.
+✴ Advanced Use Cases:
+Dynamic AWS IAM Policy Statements:
+variable "statements" {
+ description = "List of IAM policy statements"
+ type    = list(object({
+ effect  = string
+ actions  = list(string)
+ resources = list(string)
+ }))
+ default = [
+ {
+ effect  = "Allow"
+ actions  = ["s3:GetObject"]
+ resources = ["arn:aws:s3:::my-bucket/*"]
+ },
+ {
+ effect  = "Allow"
+ actions  = ["ec2:DescribeInstances"]
+ resources = ["*"]
+ }
+ ]
+}
+
+resource "aws_iam_policy" "example" {
+ name  = "example-policy"
+ policy = jsonencode({
+ Version = "2012-10-17"
+ Statement = [
+ for statement in var.statements : {
+ Effect  = statement.effect
+ Action  = statement.actions
+ Resource = statement.resources
+ }
+ ]
+ })
+}
