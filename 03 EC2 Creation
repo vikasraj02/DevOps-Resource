@@ -1,0 +1,53 @@
+Terraform is a powerful tool for automating the provisioning and management of cloud infrastructure. In this blog, we will walk through the steps to create an EC2 instance on AWS using Terraform. By the end, you'll have a running EC2 instance and a solid understanding of how to manage AWS resources with Terraform.
+
+Prerequisites
+
+Before we begin, ensure you have the following:
+
+1) Terraform Installed: Download and install Terraform from the official website.
+2) AWS Account: Sign up for an AWS account if you don't already have one.
+3) AWS CLI Configured: Configure the AWS CLI with your credentials by running aws configure and entering your AWS Access Key ID and Secret Access Key.
+
+Step 1: Set Up Your Terraform Configuration
+Create a new directory for your Terraform configuration files. Inside this directory, create a file named main.tf.
+
+commands:-
+ mkdir terraform-ec2
+ cd terraform-ec2
+ touch main.tf
+Open main.tf in your preferred text editor and add the following configuration: Follow the Image 1 for configure the infra
+
+In this configuration:
+ ->We define the AWS provider and set the region to us-west-2.
+ -> We create an aws_instance resource with an Amazon Linux 2 AMI and a t2.micro instance type.
+ -> We add a tag to name the instance "ExampleInstance".
+
+Step 2: Initialize Terraform
+
+Run the following command to initialize Terraform. This will download the necessary provider plugins.
+ -> terraform init
+
+Step 3: Plan the Deployment
+ -> Next, let's generate an execution plan to see what Terraform will do. This step is useful for verifying your configuration before making any changes to your infrastructure.
+ -> terraform plan
+ -> The output will show the actions Terraform will take to create the EC2 instance. Review the output to ensure everything looks correct.
+
+Step 4: Apply the Configuration
+
+Once you are satisfied with the plan, apply the configuration to create the EC2 instance.
+ -> terraform apply
+Terraform will prompt you to confirm the action. Type yes and press Enter. Terraform will then create the EC2 instance.
+
+Step 5: Verify the EC2 Instance
+
+After the apply command completes, you can verify that the EC2 instance has been created. Go to the AWS Management Console, navigate to the EC2 Dashboard, and you should see your new instance running.
+
+Step 6: Clean Up
+
+ -> To avoid incurring unnecessary costs, you can destroy the EC2 instance when you are done.
+ -> terraform destroy
+ -> Terraform will prompt you to confirm the destruction. Type yes and press Enter. Terraform will then delete the EC2 instance.
+
+Conclusion
+
+Congratulations! You've successfully created an EC2 instance using Terraform. This simple example demonstrates the power of Terraform in managing cloud infrastructure. You can extend this basic configuration to include more resources and manage complex environments.
