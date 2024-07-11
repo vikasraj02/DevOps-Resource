@@ -1,0 +1,84 @@
+👉 unctions in Terraform are essential for writing dynamic and flexible infrastructure code. They allow you to manipulate and transform data, enabling more complex configurations and optimizations. Here's a quick guide to some of the most useful Terraform functions.
+
+👉 Collection Functions:
+Collection functions help you work with lists and maps.
+length: Get the number of elements in a list or map.
+variable "list" {
+ default = ["one", "two", "three"]
+}
+
+output "list_length" {
+ value = length(var.list) # Outputs: 3
+}
+
+👉 merge: Combine multiple maps into one.
+variable "map1" {
+ default = {a = 1, b = 2}
+}
+
+variable "map2" {
+ default = {c = 3, d = 4}
+}
+
+output "merged_map" {
+ value = merge(var.map1, var.map2) # Outputs: {a = 1, b = 2, c = 3, d = 4}
+}
+
+👉 Numeric Functions:
+Numeric functions perform operations on numeric values.
+max and min: Find the maximum or minimum value.
+
+variable "numbers" {
+ default = [1, 2, 3, 4, 5]
+}
+
+output "max_number" {
+ value = max(var.numbers...) # Outputs: 5
+}
+
+output "min_number" {
+ value = min(var.numbers...) # Outputs: 1
+}
+
+👉 Date and Time Functions:
+Date and time functions help you work with date and time values.
+timestamp: Get the current timestamp.
+output "current_time" {
+ value = timestamp() # Outputs the current timestamp
+}
+
+👉 Conditional Functions:
+variable "first" {
+ default = null
+}
+
+variable "second" {
+ default = "value"
+}
+
+output "first_non_null" {
+ value = coalesce(var.first, var.second) # Outputs: "value"
+}
+
+👉 Type Conversion Functions:
+Type conversion functions help you convert values from one type to another.
+toset: Convert a list to a set.
+variable "list" {
+ default = ["one", "two", "three"]
+}
+
+output "set" {
+ value = toset(var.list) # Outputs: toset(["one", "two", "three"])
+}
+👉 file
+The file function reads the contents of a file and returns it as a string. This is useful for embedding file contents directly into your Terraform resources.
+variable "user_data_file" {
+ description = "Path to the user data file"
+ default   = "user_data.sh"
+}
+
+resource "aws_instance" "example" {
+ ami      = "ami-0c55b159cbfafe1f0"
+ instance_type = "t2.micro"
+ user_data   = file(var.user_data_file) # Reads the contents of user_data.sh
+}
