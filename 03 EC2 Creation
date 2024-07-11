@@ -15,7 +15,26 @@ commands:-
  mkdir terraform-ec2
  cd terraform-ec2
  touch main.tf
-Open main.tf in your preferred text editor and add the following configuration: Follow the Image 1 for configure the infra
+Open main.tf in your preferred text editor and add the following configuration: 
+# main.tf
+
+provider "aws'
+region = "us-west-2"
+
+}
+
+resource "aws_instance" "example" {
+= "ami-0c55b159cbfafe1f0" # Amazon Linux 2 AMI ID for us-west-2 region
+instance_type = "t2.micro"
+
+tags = {
+Name = "ExampleInstance"
+
+ami
+
+}
+
+}
 
 In this configuration:
  ->We define the AWS provider and set the region to us-west-2.
