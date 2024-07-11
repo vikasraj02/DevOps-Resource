@@ -1,0 +1,36 @@
+🔐 Understanding Authentication and Authorization:
+
+ ->Authentication verifies the identity of a user or service, ensuring that the entity is who it claims to be.
+ ->Authorization determines what resources and operations the authenticated entity is allowed to access or perform.
+
+🛠️ Terraform and AWS Integration:
+ -> Terraform is a powerful Infrastructure as Code (IaC) tool that enables the automated provisioning of cloud resources.
+ -> AWS access keys (consisting of an Access Key ID and a Secret Access Key) are essential credentials used for programmatic access to AWS services.
+
+🔧 Configuring AWS Access Keys in Terraform:
+
+1) Setting Up AWS Credentials:
+ -> Create an IAM user in AWS with the necessary permissions.
+ -> Generate an Access Key ID and Secret Access Key for the IAM user.
+
+2) Storing Credentials Securely:
+ -> Environment Variables: Store your AWS access keys in environment variables (AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY) to avoid hardcoding them in your Terraform scripts.
+ -> AWS Credentials File: Configure the ~/.aws/credentials file with your access keys for a more secure and organized approach.
+
+3) Using AWS Provider in Terraform:
+ -> we need to store access_key and secret_key values in varibales(variables.tf) or in ( .tfvars file)
+ provider "aws" { 
+ access_key = var.AWS_ACCESS_KEY_ID
+ secret_key = var.AWS_SECRET_ACCESS_KEY 
+ region = var.AWS_REGION
+ }
+4) Alternative to Using AWS Access Keys Directly in Terraform Configuration
+ -> Instead of specifying your AWS access keys directly in your Terraform configuration, you can configure them once on your virtual machine (VM) using the AWS CLI.
+ -> Run the command aws configure on your VM Enter your AWS Access Key ID and Secret Access Key when prompted.
+ -> This will store your credentials in the ~/.aws/credentials file.
+ -> Terraform will automatically use these stored credentials for authentication, ensuring secure and streamlined access without hardcoding sensitive information in your configuration files.
+ -> This method enhances security by keeping your credentials out of your Terraform scripts and leverages the AWS CLI to manage your access keys efficiently.
+
+🚀 Automating with Terraform:
+ -> Simplify and automate the deployment of AWS infrastructure while ensuring secure access management.
+ -> Use Terraform modules and remote state to manage infrastructure at scale, keeping authentication and authorization consistent across your environments.
