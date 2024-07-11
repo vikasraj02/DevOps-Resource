@@ -1,0 +1,23 @@
+✴ Maps in Terraform are an incredibly versatile tool for managing collections of key-value pairs. They allow you to efficiently organize and retrieve data, making your infrastructure code more modular and readable. Here’s a quick guide on how to work with maps in Terraform.
+
+✴ 1. Declaring a Map:
+You can declare a map variable in Terraform using the variable block. For example, let's declare a map of instance types with their corresponding names:
+
+variable "instance_types" {
+ description = "Map of EC2 instance types with names"
+ type    = map(string)
+ default   = {
+ "micro" = "t2.micro"
+ "small" = "t2.small"
+ "medium" = "t2.medium"
+ }
+}
+
+✴ 2. Retrieving Data from a Map:
+
+You can access elements from a map using the key. Here’s an example of how to retrieve a value from a map:
+
+resource "aws_instance" "example" {
+ ami      = "ami-0c55b159cbfafe1f0"
+ instance_type = var.instance_types["micro"] # Retrieves the value associated with the key "micro"
+}
