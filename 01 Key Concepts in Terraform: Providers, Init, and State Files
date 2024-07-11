@@ -1,0 +1,16 @@
+Terraform, developed by HashiCorp, is a powerful infrastructure as code (IaC) tool that enables you to define and manage infrastructure with configuration files. Here are some critical concepts:
+
+1) Providers:
+ -> Providers are responsible for interacting with APIs of the services you want to manage.
+ -> They define the resources and their behavior. Examples include AWS, Azure, Google Cloud, and Kubernetes.
+ -> Each provider needs to be configured with the necessary credentials and API endpoint information.
+
+2) Terraform Init:
+ -> The terraform init command initializes a Terraform working directory.
+ -> It downloads the necessary provider plugins, modules, and sets up the backend configuration.
+ -> This is the first command you run after writing a new configuration or cloning an existing one.
+
+3) State File:
+ -> Terraform uses a state file to map real-world resources to your configuration.
+ -> It keeps track of metadata and resource dependencies, enabling Terraform to determine the necessary actions for updates.
+ -> State can be stored locally or remotely, with remote state providing collaboration capabilities and security features.
