@@ -1,0 +1,27 @@
+📊 Current State:
+The current state is the actual setup of your infrastructure right now. Terraform keeps track of this in a state file, which tells Terraform what resources it has created and what their configurations are.
+
+🌟 Desired State:
+The desired state is what you want your infrastructure to look like, defined in your Terraform configuration files. It’s like a blueprint for your ideal setup.
+
+🔄 How Terraform Works:
+1)Planning: Terraform compares the current state with the desired state and creates a plan to show what changes need to be made.
+2)Applying: Terraform makes those changes to ensure the current state matches the desired state.
+
+🔄 Example:
+resource "aws_s3_bucket" "example" {
+ bucket = "my-terraform-bucket"
+ acl  = "private"
+}
+
+Here, the desired state is an S3 bucket named my-terraform-bucket with private access.
+
+🔄 Real-World Scenario:
+If you make changes directly in the AWS console (like changing settings of an S3 bucket), these changes won’t be in Terraform’s state file. When you run terraform apply, Terraform will overwrite these manual changes to match the desired state in your configuration files.
+
+🎯 Key Points:
+Current State is the actual infrastructure setup.
+Desired State is what you define in your Terraform files.
+Terraform ensures the current state matches the desired state, even if manual changes were made in the AWS console.
+Keeping your infrastructure consistent and predictable is crucial for reliability. Terraform makes this easier!
+Ready to learn more about IaC? Let's connect! 🌐
