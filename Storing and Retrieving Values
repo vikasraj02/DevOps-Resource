@@ -1,0 +1,52 @@
+In Terraform, variables are a fundamental aspect that allows for the customization and flexibility of your infrastructure code. They enable you to write reusable and modular configurations. Here's a quick guide on how to store and retrieve variables in Terraform.
+
+1. Declaring Variables:
+Variables in Terraform are declared using the variable block. You can specify various attributes such as type, default values, and descriptions.
+
+variable "instance_type" {
+ description = "Type of EC2 instance"
+ type    = string
+ default   = "t2.micro"
+}
+
+2. Storing Variables:
+
+Variables can be stored in multiple ways:
+ -> In the configuration file: As shown above, you can directly declare variables in your Terraform configuration files.
+ -> Terraform.tfvars file: You can create a terraform.tfvars file to store your variable values.
+ -> Environment variables: Prefix your variable names with TF_VAR_ to store them as environment variables.
+ -> Command-line flags: Use the -var flag to pass variables directly when running Terraform commands.
+
+3. Retrieving Variables:
+To use the variables within your Terraform configuration, simply reference them using ${var.variable_name}.
+
+resource "aws_instance" "example" {
+ ami      = "ami-0c55b159cbfafe1f0"
+ instance_type = var.instance_type
+}
+
+4. Example Usage:
+Here's an example combining the declaration and usage of variables:
+ -> main.tf:
+
+provider "aws" {
+ region = "us-west-2"
+}
+
+resource "aws_instance" "example" {
+ ami      = "ami-0c55b159cbfafe1f0"
+ instance_type = var.instance_type
+}
+
+ -> variables.tf:
+variable "instance_type" {
+ description = "Type of EC2 instance"
+ type    = string
+ default   = "t2.micro"
+}
+
+5. Overriding Default Values:
+
+You can override the default values in terraform.tfvars or via command-line flags:
+ -> terraform.tfvars:
+ instance_type = "t2.small"
