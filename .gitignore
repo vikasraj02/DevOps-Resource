@@ -1,0 +1,14 @@
+# Terraform
+.terraform/
+terraform.tfstate
+terraform.tfstate.*
+*.tfvars
+
+# SSH keys
+*.pem
+*.key
+id_rsa*
+id_ed25519*
+
+# OS
+.DS_Store
